@@ -1,5 +1,6 @@
 const db = require("../models");
 const Post = db.posts;
+console.log(Post)
 
 // Create and Save a new Post
 exports.create = (req, res) => {
@@ -11,12 +12,15 @@ exports.create = (req, res) => {
         return;
     }
 
-    let imgType = (req.body.imagen).split('.')[(req.body.imagen).split('.').length - 1]
-    if (req.body.imagen && imgType !== 'png' && imgType !== 'jpg') {
-        res.status(400).send({
-            message: "Si pones imagen, debe ser jpg o png"
-        });
-        return;
+    if (req.body.imagen) {
+
+        let imgType = (req.body.imagen).split('.')[(req.body.imagen).split('.').length - 1]
+        if (imgType !== 'png' && imgType !== 'jpg') {
+            res.status(400).send({
+                message: "Si pones imagen, debe ser jpg o png"
+            });
+            return;
+        }
     }
 
     // Create a Post
