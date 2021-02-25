@@ -46,9 +46,16 @@ exports.create = (req, res) => {
 
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
 
-    Post.findAll()
+    Post.findAll({
+
+        // Add order conditions here....
+        order: [
+            ['createdAt', 'DESC'],
+
+        ],
+        attributes: ['id', 'titulo', 'imagen', 'categoria', 'createdAt']
+    })
         .then(data => {
             res.send(data);
         })
