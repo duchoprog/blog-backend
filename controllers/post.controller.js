@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     }
 
     // Create a Post
-    const tutorial = {
+    const post = {
         titulo: req.body.titulo,
         contenido: req.body.contenido,
         categoria: req.body.categoria,
