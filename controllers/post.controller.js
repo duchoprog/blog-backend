@@ -4,7 +4,41 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Post
 exports.create = (req, res) => {
+    // Validate request
+    if (!req.body.titulo || !req.body.titulo) {
+        res.status(400).send({
+            message: "Titulo y contenidos son obligatorios"
+        });
+        return;
+    }
 
+    let imgType = (req.body.imagen).split('.')[(req.body.imagen).split('.').length - 1]
+    if (req.body.imagen && imgType !== 'png' && imgType !== 'jpg') {
+        res.status(400).send({
+            message: "Si pones imagen, debe ser jpg o png"
+        });
+        return;
+    }
+
+    // Create a Post
+    const tutorial = {
+        titulo: req.body.titulo,
+        contenido: req.body.contenido,
+        categoria: req.body.categoria,
+        imagen: req.body.imagen,
+    };
+
+    // Save Post in the database
+    Post.create(post)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the Post."
+            });
+        });
 };
 
 // Retrieve all Posts from the database.
