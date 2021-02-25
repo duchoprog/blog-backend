@@ -73,7 +73,14 @@ exports.findOne = (req, res) => {
 
     Post.findByPk(id)
         .then(data => {
-            res.send(data);
+            if (!data) {
+                return res.status(404).send({
+                    message: 'Id Not Found',
+                });
+            } else {
+
+                res.send(data);
+            }
         })
         .catch(err => {
             res.status(500).send({
